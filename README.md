@@ -39,61 +39,68 @@ VIRTUAL_HOST
 # links
 
 *  'accounts': accounts POST GET PATCH
+
     manage your user infomation.
+    
     you must provide your token in  Headers -> Authorization  to get accounts be accessible except GET method.
+    
 *  'devices': devices    POST GET DELETE PATCH 
+
     manage your device infomation.
+    
     you must provide your token in  Headers -> Authorization  to get accounts be accessible.
+    
 *  'gettoken': gettoken  GET 
+
     you must provide your username and password registered at accounts item point, in Headers -> Authorization.
     
 # example
 
 ```javascript
-    var device_url = 'http://SERVER-URL/v1/devices/'
-    var login_url = 'http://SERVER-URL/v1/gettoken/';
-    
-		mui.ajax(device_url + '?where={"username":"' + username + '"}', {
-			headers: {
-				'Content-Type': 'application/json',
-				"authorization": token,
-			},
-			data: deviceInfo,
-			dataType: 'json',
-			type: 'post',
-			async: false,
-			timeout: 1000,
-			success: function(data) {
-				mui.toast("add device success！")
-			},
-			error: function(xhr, textStatus, errorThrown) {
-				mui.toast("add device failed, please check it!");
-				console.log("xhr code:" + xhr.status);
-			}
-		});
+var device_url = 'http://SERVER-URL/v1/devices/'
+var login_url = 'http://SERVER-URL/v1/gettoken/';
 
-  function login(username, passwd) {
-    var authed = false;
-    mui.ajax(login_url + username, {
-      headers: {
-        'Content-Type': 'application/json',
-        "authorization": "Basic " + btoa(username + ":" + passwd),
-        "cache-control": "no-cache"
-      },
-      dataType: 'json',
-      type: 'get',
-      async: false,
-      timeout: 1000,
-      success: function(data) {
-        authed = true;
-        userInfo = JSON.stringify(data);
-        plus.storage.setItem("userInfo", userInfo);
-        userInfo = JSON.parse(userInfo);
-      },
-      error: function(xhr, textStatus, errorThrown) {
-        authed = false;
-      }
-    });
-    return authed;
-  }
+mui.ajax(device_url + '?where={"username":"' + username + '"}', {
+	headers: {
+		'Content-Type': 'application/json',
+		"authorization": token,
+	},
+	data: deviceInfo,
+	dataType: 'json',
+	type: 'post',
+	async: false,
+	timeout: 1000,
+	success: function(data) {
+		mui.toast("add device success！")
+	},
+	error: function(xhr, textStatus, errorThrown) {
+		mui.toast("add device failed, please check it!");
+		console.log("xhr code:" + xhr.status);
+	}
+});
+
+function login(username, passwd) {
+	var authed = false;
+	mui.ajax(login_url + username, {
+		headers: {
+			'Content-Type': 'application/json',
+			"authorization": "Basic " + btoa(username + ":" + passwd),
+			"cache-control": "no-cache"
+		},
+		dataType: 'json',
+		type: 'get',
+		async: false,
+		timeout: 1000,
+		success: function(data) {
+			authed = true;
+			userInfo = JSON.stringify(data);
+			plus.storage.setItem("userInfo", userInfo);
+			userInfo = JSON.parse(userInfo);
+		},
+		error: function(xhr, textStatus, errorThrown) {
+			authed = false;
+		}
+	});
+	return authed;
+}
 ```
